@@ -16,8 +16,8 @@ typedef struct linked_list linked_list_t;
 
 linked_list_t *newLinkedList(){
     linked_list_t *lst = malloc(sizeof(struct linked_list));
-    lst->head        = NULL;
-    lst->quantity    = 0;
+    lst->head          = NULL;
+    lst->quantity      = 0;
     return lst;
 }
 
@@ -32,7 +32,4 @@ void push(linked_list_t *lst, void *newData){
 void *peek(linked_list_t *lst){
     return (lst->head)->data;
 }
-
-
- 
 
