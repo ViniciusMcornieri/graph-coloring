@@ -21,12 +21,25 @@ linked_list_t *newLinkedList(){
     return lst;
 }
 
+void freeNode(node_t *head){
+    if(head!=NULL){
+        freeNode(head->next);
+        free(head);
+    }
+}
+
+void freeLinkedList(linked_list_t * ll){
+    freeNode(ll->head);        
+    free(ll);
+}
+
 void push(linked_list_t *lst, void *newData){
     node_t *newNode = malloc(sizeof(struct node));
     newNode->data   = newData;
     newNode->next   = lst->head;
     lst->head       = newNode;
     lst->quantity   += 1;
+    
 }
 
 void *peek(linked_list_t *lst){

@@ -15,6 +15,8 @@ struct linked_list{
 
 typedef struct linked_list linked_list_t;
 
+void freeLinkedList(linked_list_t * ll);
+
 linked_list_t *newLinkedList();
 
 void push(linked_list_t *lst, void *newData);

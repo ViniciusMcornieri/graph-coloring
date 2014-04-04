@@ -45,17 +45,31 @@ void test_fixture_linked_list(){
 }
 
 void test_new_graph_adj(){
-    graph_t *g = buildGraph("./data/anna.col", ADJ);
+    graph_t *g = buildGraph("./data/anna.col", ADJ, 0.5);    
     int i, qtt = 0;
-    for(i=0; i<g->vertex_qtt; i++){
+    for(i = 0; i<g->vertex_qtt; i++){
          qtt += g->adj[i]->quantity;
     }
-    assert_int_equal(qtt,g->edge_qtt);
+    assert_int_equal(qtt, g->edge_qtt);  
 }
+
+void test_new_graph_mtx(){
+    graph_t *g = buildGraph("./data/anna.col", MTX, 0.5);
+ /* int i,j, qtt = 0;
+    for(i = 0; i < g->vertex_qtt; i++){
+        for(j = 0; j < g->vertex_qtt; j++){
+            if (g->mtx[i][j].active == 1) qtt++;
+        }
+    }
+    assert_int_equal(qtt, g->edge_qtt);
+    //*/
+}
+
 
 void test_fixture_graph(){
     test_fixture_start();
     run_test(test_new_graph_adj);
+    run_test(test_new_graph_mtx);
     test_fixture_end();
 
 }
