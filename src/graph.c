@@ -1,5 +1,5 @@
 #include "include/main.h"
-#include "include/linked_list.h"
+#include "linked_list.c"
 #define ADJ 1
 #define MTX 2
 #define BTH 3
@@ -9,6 +9,7 @@ struct vertex{
     int id;
     int color;
     int weight;
+	int adjqtt;
 };
 
 struct edge{
@@ -29,7 +30,7 @@ struct graph{
     float den_limit;
     vertex_t *vertexList;
     linked_list_t **adj;
-    edge_t **mtx;
+    int **mtx;
     int adjOrMtx;
 };
 
@@ -66,13 +67,13 @@ void mallocAdj(graph_t *g){
 
 void mallocMtx(graph_t *g){
     int i,j;
-    edge_t *e;
-    g->mtx = malloc(sizeof(edge_t *)*g->vertex_qtt);    
+    int *e;
+    g->mtx = malloc(sizeof(int *)*g->vertex_qtt);    
     for(i = 0; i < g->vertex_qtt; i++){
-        g->mtx[i] = malloc(sizeof(edge_t)*g->vertex_qtt);
+        g->mtx[i] = malloc(sizeof(int)*g->vertex_qtt);
         e = g->mtx[i];    
-        for(j = 0; j < g->vertex_qtt; j++){
-                e[j].active = 0;
+       for(j = 0; j < g->vertex_qtt; j++){
+                e[j] = 0;
         }    
     }
 }
@@ -80,8 +81,8 @@ void mallocMtx(graph_t *g){
 void mallocEdges(graph_t *g){
     if(g->adjOrMtx == ADJ){
         mallocAdj(g);     
-    }else if(g->adjOrMtx == MTX){
         mallocMtx(g); 
+    }else if(g->adjOrMtx == MTX){
     }else if(g->adjOrMtx == BTH){
         mallocAdj(g);
         mallocMtx(g);
@@ -110,29 +111,32 @@ graph_t *newGraph(int vertex_qtt, int edge_qtt, int adjOrMtx, float den_param){
 }
 
 void addVertex(graph_t *g, int id){
-    int i                  = id+1;
+    int i                  = id-1;
     g->vertexList[i].id    = id;
     g->vertexList[i].color = 0;
+	g->vertexList[i].adjqtt= 0;
 }
 
 void addAllVertex(graph_t *g){
     int i;
     int vqtt = g->vertex_qtt;
-    for(i = 0; i<vqtt; addVertex(g,i++));
+    for(i = 0; i<vqtt;addVertex(g,++i));
 }
 
 void addEdge(graph_t *g, int a, int b){
     edge_t *e;
-    if(g->adjOrMtx == ADJ){
-        e = malloc(sizeof(edge_t));
-        e->from   = a;
-        e->to     = b;
-        e->active = 1;
-        push(g->adj[a-1], e);
+   // if(g->adjOrMtx == ADJ){
+    e = malloc(sizeof(edge_t));
+    e->from   = a;
+    e->to     = b;
+    e->active = 1;
+	g->vertexList[a-1].adjqtt++;
+    push(g->adj[a-1], e);
+    g->mtx[a-1][b-1]=1;
+/*
     }else if(g->adjOrMtx == MTX){
     }else if(g->adjOrMtx == BTH){
-    } 
-    
+    }**/     
 }
 
 graph_t *readGraphFile(FILE *graphFile, int adjOrMtx, float den_param){
