@@ -1,0 +1,19 @@
+#ifndef hc_h
+#define hc_h
+#include "linked_list.h"
+#include "graph.h"
+#include "main.h"
+struct color{
+	int cost;
+	linked_list_t *vertex_list;
+	int color;
+};
+
+typedef struct color color_t;
+
+
+void freeGraph(graph_t *g);
+graph_t *newGraph(int vertex_qtt, int edge_qtt, int adjOrMtx, float den_param);
+graph_t *buildGraph(char *fileName, int adjOrMtx, float den_param);
+
+#endif

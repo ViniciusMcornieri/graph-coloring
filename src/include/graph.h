@@ -10,6 +10,7 @@ struct vertex{
     int id;
     int color;
     int weight;
+    int adj_qtt;
 };
 
 struct edge{
@@ -30,7 +31,7 @@ struct graph{
     float den_limit;
     vertex_t *vertexList;
     linked_list_t **adj;
-    edge_t **mtx;
+    int **mtx;
     int adjOrMtx;
 };
 

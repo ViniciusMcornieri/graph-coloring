@@ -1,4 +1,5 @@
-#include "graph.c"
+#include "include/linked_list.h"
+#include "include/graph.h"
 #include "include/main.h"
 
 struct color{
@@ -23,7 +24,7 @@ vertex_t *preprocessing(graph_t g){
 	int       index = 0;
 	int i;	
 	for(i=0;i<g.vertex_qtt;i++){
-		if(g.vertexList[i].adjqtt!=0){
+		if(g.vertexList[i].adj_qtt!=0){
 			pi[index] = g.vertexList[i];
 			index++;
 		}
@@ -88,53 +89,14 @@ linked_list_t *HC(graph_t *g){
 	return s;
 }
 
-int main(){
-	graph_t *g1 = newGraph(5, 7, 1, 1);
-	addAllVertex(g1);/**
-	addEdge(g1, 1, 2);
-	addEdge(g1, 2, 1);
-	addEdge(g1, 2, 4);
-	addEdge(g1, 4, 2);
-	addEdge(g1, 3, 5);
-	addEdge(g1, 5, 3);
-	addEdge(g1, 5, 6);
-	addEdge(g1, 6, 5);
-	addEdge(g1, 4, 5);
-	addEdge(g1, 5, 4);
-	addEdge(g1, 1, 6);
-	addEdge(g1, 6, 1);**/
-	addEdge(g1, 1, 2);
-	addEdge(g1, 2, 1);
-	addEdge(g1, 1, 3);
-	addEdge(g1, 3, 1);
-	addEdge(g1, 2, 3);
-	addEdge(g1, 3, 2);
-	addEdge(g1, 2, 4);
-	addEdge(g1, 4, 2);
-	addEdge(g1, 2, 5);
-	addEdge(g1, 5, 2);
-	addEdge(g1, 3, 5);
-	addEdge(g1, 5, 3);
-	addEdge(g1, 4, 5);
-	addEdge(g1, 5, 4);
-	int i,j;
-	for(i=0;i<g1->vertex_qtt;i++){
-		printf("v%d = qtt adjs %d\n",g1->vertexList[i].id,g1->vertexList[i].adjqtt);
-	}
-	vertex_t *pi = preprocessing(*g1);
-	for(i=0;i<sizeof(pi);i++){
-		printf("v%d ",pi[i].id);
-	}
-	printf("\n");
-
-	/// HC
-	color_t *cor = NULL;
-	linked_list_t *list = HC(g1);
+int print_out(linked_list_t *list){
 	node_t *node = list->head;
 	linked_list_t *vlist;
+	color_t *cor = NULL;
 	node_t *vnode = NULL;
 	vertex_t *v1 = NULL;
-	for(i=0;i<list->quantity;i++){
+	int i,j;
+    for(i=0;i<list->quantity;i++){
 		if(node!=NULL){
 			cor = node->data;
 			printf("cor: %d >>>",cor->color);
