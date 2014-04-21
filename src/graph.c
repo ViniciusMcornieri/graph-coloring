@@ -1,9 +1,5 @@
 #include "include/main.h"
 #include "include/linked_list.h"
-#define ADJ 1
-#define MTX 2
-#define BTH 3
-#define DEN 4
 
 struct vertex{
     int id;
@@ -12,26 +8,15 @@ struct vertex{
 	int adj_qtt;
 };
 
-struct edge{
-    int from;
-    int to;
-    int active;
-
-};
 
 typedef struct vertex vertex_t;
-
-typedef struct edge edge_t;
 
 struct graph{
     int vertex_qtt;
     int edge_qtt;
     float density;
-    float den_limit;
     vertex_t *vertexList;
-    linked_list_t **adj;
     int **mtx;
-    int adjOrMtx;
 };
 
 typedef struct graph graph_t;
@@ -42,28 +27,12 @@ float calculateDensity(int vertex_qtt, int edge_qtt){
 
 void freeGraph(graph_t *g){
     int i;
-    if(g->adjOrMtx == ADJ){
-        for(i = 0; i<g->vertex_qtt; freeLinkedList(g->adj[i++])); 
-    }else if(g->adjOrMtx == MTX){
-        for(i = 0; i<g->vertex_qtt; free(g->mtx[i++]));
-        free(g->mtx);    
-    }else if(g->adjOrMtx == BTH){
-        for(i = 0; i<g->vertex_qtt; freeLinkedList(g->adj[i++])); 
-        for(i = 0; i<g->vertex_qtt; free(g->mtx[i++]));
-        free(g->adj);        
-        free(g->mtx);
-    }
+    for(i = 0; i<g->vertex_qtt; free(g->mtx[i++]));
+    free(g->mtx);    
     free(g);
     g = NULL;
-    //*/
 }
 
-
-void mallocAdj(graph_t *g){
-    int i;
-    g->adj = malloc(sizeof(linked_list_t *)*g->vertex_qtt);
-    for(i = 0; i < g->vertex_qtt; g->adj[i++] = newLinkedList());
-}
 
 void mallocMtx(graph_t *g){
     int i,j;
@@ -78,35 +47,13 @@ void mallocMtx(graph_t *g){
     }
 }
 
-void mallocEdges(graph_t *g){
-    if(g->adjOrMtx == ADJ){
-        mallocAdj(g);     
-        mallocMtx(g); 
-    }else if(g->adjOrMtx == MTX){
-    }else if(g->adjOrMtx == BTH){
-        mallocAdj(g);
-        mallocMtx(g);
-    }else if(g->adjOrMtx == DEN){
-        if( g->density <= g->den_limit){
-            mallocAdj(g);
-            g->adjOrMtx = ADJ;       
-        }else{
-            mallocMtx(g);
-            g->adjOrMtx = MTX;    
-        }
-    }
-}
-
-
-graph_t *newGraph(int vertex_qtt, int edge_qtt, int adjOrMtx, float den_param){
+graph_t *newGraph(int vertex_qtt, int edge_qtt){
     graph_t *g    = malloc(sizeof(graph_t));
     g->vertex_qtt = vertex_qtt;
     g->edge_qtt   = edge_qtt;
-    g->density    = calculateDensity(vertex_qtt, edge_qtt);
-    g->den_limit  = den_param;
-    g->adjOrMtx   = adjOrMtx;         
+    g->density    = calculateDensity(vertex_qtt, edge_qtt);       
     g->vertexList = malloc(sizeof(vertex_t)*vertex_qtt);
-    mallocEdges(g);
+    mallocMtx(g);
     return g;
 }
 
@@ -124,23 +71,12 @@ void addAllVertex(graph_t *g){
 }
 
 void addEdge(graph_t *g, int a, int b){
-    edge_t *e;
-   // if(g->adjOrMtx == ADJ){
-    e = malloc(sizeof(edge_t));
-    e->from   = a;
-    e->to     = b;
-    e->active = 1;
-	g->vertexList[a-1].adj_qtt++;
-    push(g->adj[a-1], e);
+    g->vertexList[a-1].adj_qtt++;
     g->mtx[a-1][b-1]=1;
-    g->mtx[b-1][a-1]=1;
-/*
-    }else if(g->adjOrMtx == MTX){
-    }else if(g->adjOrMtx == BTH){
-    }**/     
+    g->mtx[b-1][a-1]=1; 
 }
 
-graph_t *readGraphFile(FILE *graphFile, int adjOrMtx, float den_param){
+graph_t *readGraphFile(FILE *graphFile){
     graph_t *g = NULL;
     int vqtt, eqtt, a, b;
     char s[80];
@@ -149,7 +85,7 @@ graph_t *readGraphFile(FILE *graphFile, int adjOrMtx, float den_param){
         fscanf(graphFile, "%s", s);
     }
     fscanf(graphFile, "%s %d %d", s, &vqtt, &eqtt);
-    g = newGraph(vqtt, eqtt, adjOrMtx, den_param);
+    g = newGraph(vqtt, eqtt);
     addAllVertex(g);     
     while(fscanf(graphFile, "%s %d %d", s, &a, &b) != EOF){        
         addEdge(g,a,b);
@@ -157,13 +93,13 @@ graph_t *readGraphFile(FILE *graphFile, int adjOrMtx, float den_param){
     return g;
 }
 
-graph_t *buildGraph(char *fileName, int adjOrMtx, float den_param){
+graph_t *buildGraph(char *fileName){
 
     FILE *graphFile;
     graphFile = fopen(fileName,"r");
     graph_t *g = NULL;
     if(graphFile != NULL){
-       g = readGraphFile(graphFile, adjOrMtx, den_param);
+       g = readGraphFile(graphFile);
        fclose(graphFile);
     }
     

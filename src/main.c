@@ -11,7 +11,7 @@ int main(int argc, char* argv[]){
     char *file_path;
     file_path = argv[1];
     printf("%s\n",file_path);
-    graph_t *g = buildGraph(file_path, 1, 0.1);
+    graph_t *g = buildGraph(file_path);
     linked_list_t *colors = HC(g);
     print_out(colors);
 }
