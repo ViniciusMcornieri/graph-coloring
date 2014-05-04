@@ -21,7 +21,7 @@ color_t *new_color(int id){
 }
 
 priority_queue_t *preprocessing(graph_t *g){
-    priority_queue_t *pi = newPriorityQueue();
+    priority_queue_t *pi = new_priority_queue();
     int i;	
     for(i=0; i<g->vertex_qtt; i++){
         if(g->vertexList[i].adj_qtt != 0){
@@ -55,25 +55,23 @@ int is_not_adj(graph_t *g, vertex_t *v, linked_list_t *vertex_list){
 }
 
 
-linked_list_t *HC(graph_t *g){
-    linked_list_t *s      = newLinkedList();
-    int not_add           = 1;
-    int id_c              = 0;
-    node_t *color_node    = NULL;
-    color_t *c            = NULL;
-    priority_queue_t *pi  = preprocessing(g);
-    p_node_t *vertex_node = pi->head;
+priority_queue_t *HC(graph_t *g){
+    priority_queue_t *s  = new_priority_queue();
+    int not_add          = 1;
+    int id_c             = 0;
+    p_node_t  *color_node  = NULL;
+    color_t *c           = NULL;
+    priority_queue_t *pi = preprocessing(g);
     vertex_t *v;
     int i;
-    for(i=0; i<pi->quantity-1; i++){
-        v           = vertex_node->data;
-        vertex_node = vertex_node->next;
+    for(i=0; i < pi->quantity; i++){
+        v           = get_data(pi, i);
         not_add     = 1;
         color_node  = s->head;
         while(not_add){
             if (color_node==NULL){
                 c = new_color(++id_c);
-                push(s,c);
+                p_insert(s, c, (-1*id_c));
                 color_node = s->head;
             }else{
                 c = color_node->data;
@@ -90,8 +88,8 @@ linked_list_t *HC(graph_t *g){
     return s;
 }
 
-int print_out(linked_list_t *list){
-    node_t *node  = list->head;
+int print_out(priority_queue_t *list){
+    p_node_t *node  = list->head;
     color_t *cor  = NULL;
     node_t *vnode = NULL;
     vertex_t *v1  = NULL;

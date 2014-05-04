@@ -16,11 +16,13 @@ struct priority_queue{
 
 typedef struct priority_queue priority_queue_t;
 
-void freePriorityQueue(priority_queue_t * pq);
+void free_priority_queue(priority_queue_t * pq);
 
-priority_queue_t *newPriorityQueue();
+priority_queue_t *new_priority_queue();
 
-void p_insert(priority_queue_t *lst, void *newData, int cmp);
+void p_insert (priority_queue_t *pq, void *newData, int cmp);
 
-void *p_peek(priority_queue_t *lst);
+void *get_data(priority_queue_t *pq, int  pos);
+
+void *p_peek  (priority_queue_t *pq);
 #endif

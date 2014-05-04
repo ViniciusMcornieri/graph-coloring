@@ -1,4 +1,4 @@
-#include "include/linked_list.h"
+#include "include/priority_queue.h"
 #include "include/graph.h"
 #include "include/hc.h"
 #include "omp.h"
@@ -9,9 +9,9 @@ int main(int argc, char* argv[]){
         return 1;
     }
     char *file_path;
-    file_path = argv[1];
+    file_path                = argv[1];
     printf("%s\n",file_path);
-    graph_t *g = buildGraph(file_path);
-    linked_list_t *colors = HC(g);
+    graph_t *g               = buildGraph(file_path);
+    priority_queue_t *colors = HC(g);
     print_out(colors);
 }
