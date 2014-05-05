@@ -2,6 +2,7 @@
 #include "include/linked_list.h"
 #include "include/graph.h"
 #include "include/main.h"
+#include "omp.h"
 
 struct color{
     int cost;
@@ -57,31 +58,34 @@ int is_not_adj(graph_t *g, vertex_t *v, linked_list_t *vertex_list){
 
 priority_queue_t *HC(graph_t *g){
     priority_queue_t *s  = new_priority_queue();
-    int not_add          = 1;
     int id_c             = 0;
-    p_node_t  *color_node  = NULL;
-    color_t *c           = NULL;
+    // p_node_t  *color_node  = NULL;
+    //color_t *c           = NULL;
     priority_queue_t *pi = preprocessing(g);
-    vertex_t *v;
     int i;
-    for(i=0; i < pi->quantity; i++){
-        v           = get_data(pi, i);
-        not_add     = 1;
-        color_node  = s->head;
-        while(not_add){
-            if (color_node==NULL){
-                c = new_color(++id_c);
-                p_insert(s, c, (-1*id_c));
-                color_node = s->head;
-            }else{
-                c = color_node->data;
-            }
-            if(is_not_adj(g,v,c->vertex_list)){
-                push(c->vertex_list,v);
-                v->color = c->color;
-                not_add = 0;
-            }else{
-                color_node = color_node->next;
+#pragma omp parallel 
+    {  
+        #pragma omp for
+        for(i=0; i < pi->quantity; i++){
+            vertex_t *v     = get_data(pi, i);
+            int not_add     = 1;
+            p_node_t *color_node = s->head;
+            color_t *c           = NULL;
+            while(not_add){
+                if (color_node==NULL){
+                    c = new_color(++id_c);
+                    p_insert(s, c, (-1*id_c));
+                    color_node = s->head;
+                }else{
+                    c = color_node->data;
+                }
+                if(is_not_adj(g,v,c->vertex_list)){
+                    push(c->vertex_list,v);
+                    v->color = c->color;
+                    not_add = 0;
+                }else{
+                    color_node = color_node->next;
+                }
             }
         }
     }

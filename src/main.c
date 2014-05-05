@@ -5,8 +5,11 @@
 
 int main(int argc, char* argv[]){
     if(argc < 2){
-        printf("hey amigo, para executar passe o caminho do grafo como parametro. Obrigado");
+        printf("hey amigo, para executar passe o caminho d bagulho como parametro. Obrigado");
         return 1;
+    }else if (argc==3){
+        printf("%d",atoi(argv[2]));
+        omp_set_num_threads(atoi(argv[2]));
     }
     char *file_path;
     file_path                = argv[1];
@@ -14,4 +17,5 @@ int main(int argc, char* argv[]){
     graph_t *g               = buildGraph(file_path);
     priority_queue_t *colors = HC(g);
     print_out(colors);
+    return 0;
 }

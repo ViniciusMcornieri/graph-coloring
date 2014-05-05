@@ -1,4 +1,4 @@
 ALL:
-	clang *.c -Wall -Werror
+	gcc *.c -Wall -Werror -fopenmp
 clear:
 	rm a.out
