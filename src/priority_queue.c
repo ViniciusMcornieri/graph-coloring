@@ -1,10 +1,11 @@
 #include "include/main.h"
 #include "include/priority_queue.h"
 
-priority_queue_t *new_priority_queue(){
+priority_queue_t *new_priority_queue(int priori){
     priority_queue_t *lst = malloc(sizeof(struct priority_queue));
     lst->head             = NULL;
     lst->quantity         = 0;
+    lst->min_or_max       = priori;
     return lst;
 }
 
@@ -28,18 +29,21 @@ void p_insert(priority_queue_t *pq, void *newData, int cmp){
     int stop           = 0;
     p_node_t *pivot    = pq->head;
     p_node_t *father   = NULL;
-
     while(!stop){
         if(pivot == NULL){
             stop = 1;
             pq->quantity++;
-        }else if(pivot->cmp <= cmp){
+        }else if(pivot->cmp <= cmp && pq->min_or_max==MAX_PRIORI){
+            newNode->next = pivot;
+            stop          = 1;
+            pq->quantity++;
+        }else if(pivot->cmp >= cmp && pq->min_or_max==MIN_PRIORI){
             newNode->next = pivot;
             stop          = 1;
             pq->quantity++;
         }else{
             father = pivot;
-            pivot = pivot->next;
+            pivot  = pivot->next;
         }
     }
 

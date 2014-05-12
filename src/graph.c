@@ -72,6 +72,7 @@ void addAllVertex(graph_t *g){
 
 void addEdge(graph_t *g, int a, int b){
     g->vertexList[a-1].adj_qtt++;
+    g->vertexList[b-1].adj_qtt++;
     g->mtx[a-1][b-1]=1;
     g->mtx[b-1][a-1]=1; 
 }
