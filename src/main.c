@@ -17,14 +17,18 @@ int main(int argc, char* argv[]){
     printf("%s\n",file_path);
     graph_t *g               = buildGraph(file_path);
     priority_queue_t *colors = HC(g);
-    linked_list_t *l1         = avail_color(g, (colors->head)->data, &g->vertexList[2]);
-    node_t *nd = l1->head;
-    vertex_t *v;
+    priority_queue_t *cc     = clone_solution(colors);
+    slash_vertex(cc, &g->vertexList[2]);
+   print_out(cc);
+   priority_queue_t *l1     = backtracking(g, cc, &g->vertexList[2], 1) ;
+   /* p_node_t *nd             = l1->head;
+   // vertex_t *v;
     while(nd!=NULL){
         v = nd->data;
         printf("id->%d\n",v->id);
         nd = nd->next;
-    }
+    }*/
     print_out(colors);
+    print_out(l1);
     return 0;
 }
