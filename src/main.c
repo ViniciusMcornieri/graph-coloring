@@ -16,19 +16,12 @@ int main(int argc, char* argv[]){
     file_path                = argv[1];
     printf("%s\n",file_path);
     graph_t *g               = buildGraph(file_path);
-    priority_queue_t *colors = HC(g);
-    priority_queue_t *cc     = clone_solution(colors);
-    slash_vertex(cc, &g->vertexList[2]);
-   print_out(cc);
-   priority_queue_t *l1     = backtracking(g, cc, &g->vertexList[2], 1) ;
-   /* p_node_t *nd             = l1->head;
-   // vertex_t *v;
-    while(nd!=NULL){
-        v = nd->data;
-        printf("id->%d\n",v->id);
-        nd = nd->next;
-    }*/
-    print_out(colors);
-    print_out(l1);
+    int **s = HC(g);
+    int v   = s[1][1];
+    printf(">%d<\n",v);
+    slash_pos(s[1], 1, g->vertex_qtt);
+    print_out(s, g->vertex_qtt);
+    printf("kkk\n");
+    print_out(backtracking(g, s, v, 0), g->vertex_qtt);
     return 0;
 }

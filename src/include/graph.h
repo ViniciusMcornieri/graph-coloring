@@ -1,6 +1,5 @@
 #ifndef graph_h
 #define graph_h
-#include "linked_list.h"
 
 struct vertex{
     int id;
@@ -22,8 +21,12 @@ struct graph{
 
 typedef struct graph graph_t;
 
+//
+
 void freeGraph(graph_t *g);
+
 graph_t *newGraph(int vertex_qtt, int edge_qtt);
+
 graph_t *buildGraph(char *fileName);
 
 #endif

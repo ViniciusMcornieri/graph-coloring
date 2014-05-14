@@ -6,19 +6,21 @@
 
 struct color{
 	int cost;
-	linked_list_t *vertex_list;
+	vertex_t *vertex_list;
 	int color;
 };
 
 typedef struct color color_t;
 
-color_t *new_color(int id);
+//color_t *new_color(int id);
 
 priority_queue_t *preprocessing(graph_t *g);
 
-int is_not_adj(graph_t *g, vertex_t *v, linked_list_t *vertex_list);
+int is_not_adj(graph_t *g, vertex_t *v, int *cor);
 
-priority_queue_t *HC(graph_t *g);
+int **HC(graph_t *g);
 
-int print_out(priority_queue_t *list);
+int **new_colors_collection(int v_qtt);
+
+int print_out(int **s, int v_qtt);
 #endif
