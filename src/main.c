@@ -1,7 +1,7 @@
-#include "include/priority_queue.h"
 #include "include/graph.h"
 #include "include/hc.h"
 #include "include/backtracking.h"
+#include "include/colors.h"
 #include "omp.h"
 
 int main(int argc, char* argv[]){
@@ -16,12 +16,11 @@ int main(int argc, char* argv[]){
     file_path                = argv[1];
     printf("%s\n",file_path);
     graph_t *g               = buildGraph(file_path);
-    int **s = HC(g);
-    int v   = s[1][1];
-    printf(">%d<\n",v);
-    slash_pos(s[1], 1, g->vertex_qtt);
-    print_out(s, g->vertex_qtt);
-    printf("kkk\n");
-    print_out(backtracking(g, s, v, 0), g->vertex_qtt);
+    colors *s = HC(g);
+    c_print(s);
+    c_remove(s, 5);
+    c_print(s);
+    s = backtracking(g, s, 5, 2);
+    c_print(s);
     return 0;
 }

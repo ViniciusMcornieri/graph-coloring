@@ -1,5 +1,4 @@
 #include "include/main.h"
-#include "include/linked_list.h"
 
 struct vertex{
     int id;
