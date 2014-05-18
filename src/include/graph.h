@@ -1,32 +1,31 @@
 #ifndef graph_h
 #define graph_h
 
-struct vertex{
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct{
     int id;
     int color;
     int weight;
     int adj_qtt;
-};
-
-typedef struct vertex vertex_t;
+} vertex;
 
 
-struct graph{
+typedef struct {
     int vertex_qtt;
     int edge_qtt;
     float density;
-    vertex_t *vertexList;
+    vertex *vertexList;
     int **mtx;
-};
+} graph;
 
-typedef struct graph graph_t;
 
-//
+void freeGraph(graph *g);
 
-void freeGraph(graph_t *g);
+graph *newGraph(int vertex_qtt, int edge_qtt);
 
-graph_t *newGraph(int vertex_qtt, int edge_qtt);
-
-graph_t *buildGraph(char *fileName);
+graph *buildGraph(char *fileName);
 
 #endif

@@ -1,8 +1,8 @@
 #ifndef COLORS_H
 #define COLORS_H
 
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 typedef struct {
     int *vertex;

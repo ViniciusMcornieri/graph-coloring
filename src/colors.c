@@ -1,13 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-
-typedef struct {
-    int *vertex;
-    int *index;
-    int color_size;
-    int v_qtt;
-} colors;
-
+#include "include/colors.h"
 colors *create_colors(int v_qtt){
     colors *c     = malloc(sizeof(colors));
     int *vertex   = malloc(v_qtt*sizeof(int)); 
@@ -69,10 +60,13 @@ void c_remove(colors *s, int v){
             }
         }
     }
-    for(i=pivot;i <= s->index[s->color_size];i++){
+    
+    for(i=pivot;i < s->index[s->color_size];i++){
         s->vertex[i] = s->vertex[i+1];
     }
-    s->vertex[s->v_qtt] = -1;
+    
+    s->vertex[s->v_qtt-1] = -1;
+    
     for(i=cor+1; i <= s->color_size;i++){
         s->index[i]--; 
     }

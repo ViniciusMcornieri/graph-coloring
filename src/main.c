@@ -1,8 +1,4 @@
-#include "include/graph.h"
-#include "include/hc.h"
-#include "include/backtracking.h"
-#include "include/colors.h"
-#include "omp.h"
+#include "include/main.h"
 
 int main(int argc, char* argv[]){
     if(argc < 2){
@@ -15,12 +11,14 @@ int main(int argc, char* argv[]){
     char *file_path;
     file_path                = argv[1];
     printf("%s\n",file_path);
-    graph_t *g               = buildGraph(file_path);
+    graph *g               = buildGraph(file_path);
     colors *s = HC(g);
     c_print(s);
+    printf("\n");
     c_remove(s, 5);
     c_print(s);
-    s = backtracking(g, s, 5, 2);
+    printf("\n");
+    s = backtracking(g, s, 5, 1);
     c_print(s);
     return 0;
 }
