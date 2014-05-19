@@ -86,5 +86,3 @@ graph *buildGraph(char *fileName){
     return g;
     
 }
-
-

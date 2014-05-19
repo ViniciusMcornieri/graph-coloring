@@ -14,11 +14,8 @@ int main(int argc, char* argv[]){
     graph *g               = buildGraph(file_path);
     colors *s = HC(g);
     c_print(s);
-    printf("\n");
-    c_remove(s, 5);
-    c_print(s);
-    printf("\n");
-    s = backtracking(g, s, 5, 1);
+    printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
+    s = vnd(g, s, 10, 2);
     c_print(s);
     return 0;
 }

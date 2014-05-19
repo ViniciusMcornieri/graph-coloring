@@ -41,6 +41,7 @@ colors *backtracking(graph *g, colors *s, int v, int b){
                 free_colors(s_menor);   
                 s_menor = clone_colors(s_actual);    
             }
+
         }else{
             if(b>0){
                 

@@ -1,4 +1,5 @@
 #include "include/colors.h"
+
 colors *create_colors(int v_qtt){
     colors *c     = malloc(sizeof(colors));
     int *vertex   = malloc(v_qtt*sizeof(int)); 

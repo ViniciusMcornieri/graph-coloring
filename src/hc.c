@@ -14,7 +14,6 @@ int is_not_adj(graph *g, int v, colors *s, int c){
     return 1;
 }
 
-
 colors *HC(graph *g){
           int v_qtt            = g->vertex_qtt;
           colors *s            = create_colors(v_qtt);
