@@ -1,6 +1,6 @@
 ALL:
-	gcc *.c -Wall -Werror -fopenmp -ggdb -lm
+	gcc *.c -Wall -Wextra -Werror -fopenmp -ggdb -lm
 clang:
-	clang *.c -Wall -Werror -fopenmp -ggdb -lm
+	clang *.c -Wall -Wextra -Werror -fopenmp -ggdb -lm
 clear:
 	rm a.out

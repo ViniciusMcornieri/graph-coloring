@@ -15,7 +15,7 @@ int main(int argc, char* argv[]){
     colors *s = HC(g);
     c_print(s);
     printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
-    s = vnd(g, s, 10, 2);
+    s = vnd(g, s, 2);
     c_print(s);
     return 0;
 }

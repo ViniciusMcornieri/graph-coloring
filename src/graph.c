@@ -1,10 +1,10 @@
 #include "include/graph.h"
 
-float calculateDensity(int vertex_qtt, int edge_qtt){
+float calculate_density(int vertex_qtt, int edge_qtt){
     return (edge_qtt << 1)/(vertex_qtt*vertex_qtt - vertex_qtt);
 }
 
-void freeGraph(graph *g){
+void free_graph(graph *g){
     int i;
     for(i = 0; i<g->vertex_qtt; free(g->mtx[i++]));
     free(g->mtx);    
@@ -13,7 +13,7 @@ void freeGraph(graph *g){
 }
 
 
-void mallocMtx(graph *g){
+void malloc_mtx(graph *g){
     int i,j;
     int *e;
     g->mtx = malloc(sizeof(int *)*g->vertex_qtt);    
@@ -26,27 +26,27 @@ void mallocMtx(graph *g){
     }
 }
 
-graph *newGraph(int vertex_qtt, int edge_qtt){
-    graph *g    = malloc(sizeof(graph));
+graph *create_graph(int vertex_qtt, int edge_qtt){
+    graph*  g     = malloc(sizeof(graph));
     g->vertex_qtt = vertex_qtt;
     g->edge_qtt   = edge_qtt;
-    g->density    = calculateDensity(vertex_qtt, edge_qtt);       
+    g->density    = calculate_density(vertex_qtt, edge_qtt);       
     g->vertexList = malloc(sizeof(vertex)*vertex_qtt);
-    mallocMtx(g);
+    malloc_mtx(g);
     return g;
 }
 
-void addVertex(graph *g, int id){
-    int i                  = id-1;
-    g->vertexList[i].id    = id;
-    g->vertexList[i].color = 0;
-	g->vertexList[i].adj_qtt= 0;
+void add_vertex(graph* g, int id){
+    int i                    = id-1;
+    g->vertexList[i].id      = id;
+    g->vertexList[i].color   = 0;
+	g->vertexList[i].adj_qtt = 0;
 }
 
-void addAllVertex(graph *g){
+void add_all_vertex(graph* g){
     int i;
     int vqtt = g->vertex_qtt;
-    for(i = 0; i<vqtt;addVertex(g,++i));
+    for(i = 0; i<vqtt; add_vertex(g,++i));
 }
 
 void addEdge(graph *g, int a, int b){
@@ -65,8 +65,8 @@ graph *readGraphFile(FILE *graphFile){
         fscanf(graphFile, "%s", s);
     }
     fscanf(graphFile, "%s %d %d", s, &vqtt, &eqtt);
-    g = newGraph(vqtt, eqtt);
-    addAllVertex(g);     
+    g = create_graph(vqtt, eqtt);
+    add_all_vertex(g);     
     while(fscanf(graphFile, "%s %d %d", s, &a, &b) != EOF){        
         addEdge(g,a,b);
     }

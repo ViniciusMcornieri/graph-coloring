@@ -1,11 +1,10 @@
 #ifndef Backtracking_H
 #define Backtracking_H
 
-#include "graph.h"
 #include "hc.h"
 
-int *avail_color(graph *g, colors  *color, int c,  int v);
+int* avail_color(graph*, colors*, int,  int);
 
-colors *backtracking(graph *g, colors *s, int v, int b);
+colors* backtracking(graph* , colors*, int, int);
 
 #endif
