@@ -6,8 +6,8 @@
 #include <time.h>
 #include <math.h>
 
-colors *local_search(graph* , colors* , int* , int);
+colors *local_search(graph* , colors* , int* , int, int);
 
-colors *vnd(graph*, colors*, int);
+colors *vnd(graph*, colors*, int, int);
 
 #endif

@@ -7,4 +7,5 @@ int* avail_color(graph*, colors*, int,  int);
 
 colors* backtracking(graph* , colors*, int, int);
 
+colors* backtracking_parallel(graph* , colors*, int, int);
 #endif
