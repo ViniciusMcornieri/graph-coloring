@@ -34,14 +34,11 @@ colors *backtracking(graph *g, colors *s, int v, int b){
         adjs             =  avail_color(g, s_actual, i, v);
         n_adj            =  s->index[i+1] - s->index[i];
         if(adjs[0]== -1){
-            
-            if(s_menor == NULL){
-                s_menor = clone_colors(s_actual);    
-            }else if(s_actual->color_size < s_menor->color_size){
-                free_colors(s_menor);   
-                s_menor = clone_colors(s_actual);    
+            if(s_menor!=NULL){
+                free_colors(s_menor);
             }
-
+            free_colors(s);
+            return(s_actual);
         }else{
             if(b>0){
                 
@@ -62,8 +59,7 @@ colors *backtracking(graph *g, colors *s, int v, int b){
     }
     if(s_menor==NULL){
         increment_colors(s, v);
-        return s;
-        
+        return s;        
     }
     free_colors(s);
     return s_menor;

@@ -3,10 +3,10 @@
 int main(int argc, char* argv[]){
    int p = 0;
    if(argc < 2){
-        printf("hey amigo, para executar passe o caminho do bagulho como parametro. Obrigado");
+        printf("Falta de parâmetros: favor informe o caminho do grafo e se necessário o número de threads");
         return 1;
     }else if (argc==3){
-        printf("%d\n",atoi(argv[2]));
+        printf("threads: %d\n",atoi(argv[2]));
         omp_set_num_threads(atoi(argv[2]));
         p = 1;
     }
@@ -15,9 +15,14 @@ int main(int argc, char* argv[]){
     printf("%s\n",file_path);
     graph *g               = buildGraph(file_path);
     colors *s = HC(g);
-    c_print(s);
-    printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
+    //c_print(s);
+    printf(">>>\n");
+    double start_time = omp_get_wtime();
     s = vnd(g, s, 2, p);
-    c_print(s);
+    double end_time = omp_get_wtime() - start_time;
+    int min = end_time/60;
+    int seg = end_time - min*60;
+    printf("time %dm %ds\n", min, seg);
+    //c_print(s);
     return 0;
 }

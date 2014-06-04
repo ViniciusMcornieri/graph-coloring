@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ps_hwpc_eventlist class="PAPI">
+  <ps_hwpc_event type="preset" name="PAPI_L1_DCM" />
+  <ps_hwpc_event type="preset" name="PAPI_L1_ICM" /> 
+  <ps_hwpc_event type="preset" name="PAPI_L2_DCM" /> 
+  <ps_hwpc_event type="preset" name="PAPI_L2_ICM" /> 
+ <ps_hwpc_event type="preset" name="PAPI_L1_TCM" /> -
+  <ps_hwpc_event type="preset" name="PAPI_L2_TCM" />
+  <ps_hwpc_event type="preset" name="PAPI_L3_TCM" />
+  <ps_hwpc_event type="preset" name="PAPI_L1_LDM" />
+  <ps_hwpc_event type="preset" name="PAPI_L1_STM" />
+  <ps_hwpc_event type="preset" name="PAPI_L2_STM" />
+  <ps_hwpc_event type="preset" name="PAPI_TOT_INS" />
+  <ps_hwpc_event type="preset" name="PAPI_TOT_CYC" /> 
+  <ps_hwpc_event type="preset" name="PAPI_L2_TCA" /> 
+  <ps_hwpc_event type="preset" name="PAPI_L3_TCA" /> 
+  <ps_hwpc_event type="preset" name="PAPI_L2_TCR" />
+  <ps_hwpc_event type="preset" name="PAPI_L3_TCR" />
+  <ps_hwpc_event type="preset" name="PAPI_L2_TCW" /> 
+  <ps_hwpc_event type="preset" name="PAPI_L3_TCW" /> 
+</ps_hwpc_eventlist>

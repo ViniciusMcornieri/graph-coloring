@@ -23,10 +23,10 @@ colors *local_search(graph *g, colors *s, int *y, int b, int p){
     return s;
 }
 
-int *selection(colors *s){
+int *selection(colors *s, int c){
     int pivot = 0;
     int i;
-    int c = rand()%s->color_size;
+   // int c = rand()%s->color_size;
     int n = s->index[c+1] - s->index[c];
     int *chosen = malloc((n+1)*sizeof(int));
     for(i=0;i<=n;i++){
@@ -40,14 +40,16 @@ int *selection(colors *s){
 }
 
 colors *vnd(graph *g, colors *s, int b_max, int p){
-    int k, beta, it, *y, k_max;
-    k     = 0;
-    beta  = 0;
-    it    = 0;
+    int k, beta, it, *y, k_max, tot_it;
+    k      = 0;
+    beta   = 0;
+    it     = 0;
+    tot_it = 0;
     colors *s1;
-    while(it < 6*s->color_size){
+    printf("tot_it 0 c:%d\n",s->color_size);
+    while(it < 3*s->color_size){
         k_max = s->color_size-1;
-        y   = selection(s); 
+        y   = selection(s, it); 
         s1  = local_search(g, s, y, beta, p); 
         if(s1->color_size < s->color_size){
             k     = 0;
@@ -58,16 +60,20 @@ colors *vnd(graph *g, colors *s, int b_max, int p){
                 k++;
             }else{
                 k = 0;
+                it = -1;
                 if(beta < b_max){
                     beta++;
                 }else{
                     beta = 0;
+                    it   = 3*s->color_size;
                 }
             }
         }
         it++;
+        tot_it++;
         s = clone_colors(s1);
         free_colors(s1);
     }
+   printf("tot_it:%d c:%d\n",tot_it,s->color_size);
     return s;
 }
