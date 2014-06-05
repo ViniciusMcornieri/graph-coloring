@@ -15,14 +15,17 @@ int main(int argc, char* argv[]){
     printf("%s\n",file_path);
     graph *g               = buildGraph(file_path);
     colors *s = HC(g);
-    //c_print(s);
+    printf("Coloração encontrada pela heurística construtiva\n");
+    c_print(s);
     printf(">>>\n");
     double start_time = omp_get_wtime();
     s = vnd(g, s, 2, p);
     double end_time = omp_get_wtime() - start_time;
     int min = end_time/60;
     int seg = end_time - min*60;
-    printf("time %dm %ds\n", min, seg);
-    //c_print(s);
+    printf("time:%.0f s ( %dm %ds)\n",end_time, min, seg);
+    printf("Coloração encontrada pelo VND\n");
+    c_print(s);
+    c_print(s);
     return 0;
 }
